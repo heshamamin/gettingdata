@@ -12,24 +12,30 @@ activity_lables <- read.table("UCI HAR Dataset/activity_labels.txt")
 
 
 #read training set, subjects of trainig set ,and labels of training set
-train_raw <- read.table(file = "UCI HAR Dataset/train/X_train.txt", header = F)
-subject_train <- read.table(file = "UCI HAR Dataset/train/subject_train.txt", header = F)
-label_train <- read.table(file = "UCI HAR Dataset/train/y_train.txt", header = F)
+train_in <- read.table(file = "UCI HAR Dataset/train/X_train.txt", header = F)
+subject_train <- read.table(file = "UCI HAR Dataset/train/subject_train.txt", header = F,col.names = c("subject"))
+label_train <- read.table(file = "UCI HAR Dataset/train/y_train.txt", header = F,col.names = c("activityid"))
+train <- cbind(subject_train, label_train, train_in)
 
 #read test set, subjects of test set ,and labels of test set
-test_raw <- read.table(file = "UCI HAR Dataset/test/X_test.txt", header = F)
-subject_test <- read.table(file = "UCI HAR Dataset/test/subject_test.txt", header = F)
-label_test <- read.table(file = "UCI HAR Dataset/test/y_test.txt", header = F)
+test_in <- read.table(file = "UCI HAR Dataset/test/X_test.txt", header = F)
+subject_test <- read.table(file = "UCI HAR Dataset/test/subject_test.txt", header = F,col.names = c("subject"))
+label_test <- read.table(file = "UCI HAR Dataset/test/y_test.txt", header = F,col.names = c("activityid"))
+test <- cbind(subject_test, label_test, test_in)
 
-#merge data sets
-merged_data <- rbind(train_raw, test_raw)
+#1.Merges the training and the test sets to create one data set.
+merged_all <- rbind(train, test)
 
-#merge subject and labels, give their columns a nice name before adding to the merged data set
-merged_subjects <- rbind(subject_train, subject_test); names(merged_subjects) <- "subjcets"
-merged_lables <- rbind(label_train, label_test); names(merged_lables) <- "activity_label_id"
-
+#2.Extracts only the measurements on the mean and standard deviation for each measurement. 
 #filter data according to column names obtained eariler
-merged_data <- merged_data[, mean_column_names | std_column_names]
+#but keep the firts two columns (subject, activityid)
+merged <- merged_all[, c(T,T,mean_column_names | std_column_names)]
+
+#3.Uses descriptive activity names to name the activities in the data set
+merged$activity <- factor(merged$activityid, labels = activity_lables$V2)
+merged$activityid <- NULL
+
+
 
 #add subjects and labels to merged data sets, and convert to data table for next steps
 merged_data <- cbind(merged_subjects, merged_lables, merged_data)
