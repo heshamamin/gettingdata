@@ -35,6 +35,7 @@ merged$activityid <- factor(merged$activityid, labels = activity_lables$V2)
 colnames(merged)[2] <- "activity"
 
 
+
 #4.Appropriately labels the data set with descriptive variable names.
 #Using style similar to Google's R Style Guide: https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml
 all.names <- names(merged)
