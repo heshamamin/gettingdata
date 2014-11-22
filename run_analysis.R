@@ -1,3 +1,6 @@
+library(dplyr)
+library(reshape2)
+
 #Read column names and extract the ones with "mean" or "std" in their names
 #Used later to get only the required columns
 column_names <- read.table("UCI HAR Dataset/features.txt")
@@ -58,3 +61,13 @@ all.names <- gsub(pattern = "meanFreq", replacement = "mean.frequecy", x=all.nam
 #all lower case
 all.names <- tolower(all.names)
 names(merged) <- all.names
+
+
+#5.From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+melted <- melt(merged, id=c("subject","activity"), measure.vars = all.names[3:81])
+melted.group <- group_by(melted, subject, activity, variable)
+result <- summarise(melted.group, mean(value))
+names(result) <- c("subject","activity","variable","mean")
+write.table(result, file = "result.txt",row.name=FALSE)
+
+
