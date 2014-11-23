@@ -13,3 +13,7 @@ Steps:
 4. In R, set the working directory to the path of the directory that contains "run_analysis.R" and "UCI HAR Dataset". Use setwd("path_to_directory") to do so.
 5. Source the "run_analysis.R" using source("run_analysis.R")
 6. The script will generate the "result.txt" file in the working directory. This file is the output tidy dataset.
+
+Code Book
+---------
+Refer to CodeBook.md for details.
