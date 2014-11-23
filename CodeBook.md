@@ -16,4 +16,4 @@ These are the columns of the dataset:
 - subject: The id of the subject, integer value from 1 : 30
 - activity: The name of the meassured activity, possible values: WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING. Which are extracted from "UCI HAR Dataset/activity_labels.txt"
 - variable: The name of the variable extracted from the datasets. The name is changed to adhere to Google's R Style Guide.
-- mean: The mean of the variable with respect to subject and activity.
+- mean: The average of the variable with respect to subject and activity.
